@@ -9,8 +9,6 @@
 '''
 from socket import *
 from optparse import OptionParser
-import json
-import time
 from jim.utils import to_bytes, to_dict, get_msg, send_msg
 
 
@@ -63,8 +61,10 @@ send_msg(sock,presence)
 принимаем данные от сервера 
 '''
 response = get_msg(sock)
-
-print("Принята проверка от сервера: %s" % response)
+if response:
+	print("Принята проверка от сервера: %s" % response)
+else:
+	print("Нет ответа от сервера, что-то пошло не так...")
 
 sock.close()
 

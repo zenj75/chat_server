@@ -40,18 +40,19 @@ server.bind(addr)                	  # Присваивает порт (из па
 server.listen(5)                       # Переходит в режим ожидания запросов;
                                   # одновременно обслуживает не более
                                   # 5 запросов.
-action = ''
+ACTION = 'action'
+RESPONSE = 'response'
+
 
 def check_msg(pres_msg):
-    if action in pres_msg and pres_msg[action] == 'presence':
-        print('   >> action is presence. yataa! :)')
+    if ACTION in pres_msg and pres_msg[ACTION] == 'presence':
+        print('   >> action is "presence". yataa! :)')
         return {RESPONSE: 200}
     else:
-        print('   >> action not presence in message, some wrong')
+        print('   >> action not "presence" in message, some wrong...')
         return {RESPONSE: 400}
 
 
-print('pin0')
 while True:
     client, addr = server.accept()     # Принять запрос на соединение
     print("Получен запрос на соединение от %s" % str(addr))
@@ -76,13 +77,14 @@ while True:
 
     # Получаем сообщение от клиента
     presence = get_msg(client)
-    print(presence)
+    # print(presence)   # DEBUG
     # Проверяем сообщение (приветствие) и формируем ответ
     response = check_msg(presence)
-    print(response)
-    # if response:
-    #     print('всё ОК, приветствие получено')
-    # else:
-    #     print('ups, что-то пошло не так :)')
+    # print(response)     # DEBUG
+    if response:
+        print('всё ОК, приветствие получено. отправляем ответ клиенту')
+        send_msg(client,response)
+    else:
+        print('ups, что-то пошло не так :)')
 
 server.close()
