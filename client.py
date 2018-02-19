@@ -40,6 +40,7 @@ presence = {
 	}
 }
 
+
 sock = socket(AF_INET, SOCK_STREAM) # Создать сокет TCP
 sock.connect((option.address, option.port)) # Соединиться с сервером
 
@@ -55,7 +56,7 @@ print("Текущее время: %s" % tm.decode('ascii'))
 '''
 формируем json данные и посылаем их серверу
 '''
-send_msg(sock,presence)
+send_msg(sock, presence)
 
 '''
 принимаем данные от сервера 
