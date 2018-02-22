@@ -23,22 +23,21 @@ parser.add_option('-a', '--address', dest='address', default='localhost',\
 parser.add_option('-p', '--port', dest='port', type='int', default=7771,\
 	help='PORT for server', metavar='PORT')
 
-parser.add_option('-t', '--to', dest='TO', default='#all_users',\
-	help='[MSG] TO USERS', metavar='TO')
+parser.add_option('-u', '--user', dest='user', default='some_user',\
+ 	help='User name', metavar='USERNAME')
 
-parser.add_option('-m', '--msg', dest='MSG', default='hi friends! whats up?',\
-	help='MESSAGE to chat', metavar='MSG')
+parser.add_option('-r', '--read', dest='read_client', default='yes'  ,\
+	help='This client only read messages', metavar='READ_MESSAGES')
 
-parser.add_option('-u', '--user', dest='FROM', default='some_user',\
-	help='USER_NAME', metavar='FROM')
+parser.add_option('-w', '--write', dest='write_client', default='no',\
+	help='This client only write messages', metavar='WRITE_MESSAGES')
 
 (option, args) = parser.parse_args()
 print('options: {}, args: {}'.format(option, args))
 
 
-'''
-формируем json сообщение для сервера (приветствие)
-'''
+''' формируем json сообщение для сервера (приветствие) '''
+
 presence = {
 	"action": "presence",
 	"time": "timestamp",
@@ -54,8 +53,8 @@ chat_msg = {
 	"time":  "timestamp",
 	"to":  "#room_name",
 	"from":  "some_account_name",
-	"encoding":"ascii",
-	"message":"Hi all in this room!"
+	"encoding": "ascii",
+	"message": "Hi all in this room!"
 }
 
 def check_response(response):
@@ -65,57 +64,59 @@ def check_response(response):
 		print('   >> BZZ! response not "200"\n')
 		return 400
 
-# соединяемся с сервером, получаем текущее время
-with socket(AF_INET, SOCK_STREAM) as sock: # Создаем сокет TCP в менеджере контекста
-	sock.connect((option.address, option.port)) # Соединиться с сервером
+if __name__ == '__main__':
+	print('начинаем соединение с сервером... пи-пи-пи')
+	# соединяемся с сервером, получаем текущее время
+	with socket(AF_INET, SOCK_STREAM) as sock: # Создаем сокет TCP в менеджере контекста
+		sock.connect((option.address, option.port)) # Соединиться с сервером
+		print('соединение установлено... ')
 
-	tm = sock.recv(4096)
-	print("Текущее время: %s" % tm.decode('ascii'))
+		# принимаем текущее время
+		# tm = sock.recv(4096)
+		# print("Текущее время: %s" % tm.decode('ascii'))
 
+		'''	формируем json данные приветствия и посылаем их серверу  '''
+		presence[USER][ACCOUNT_NAME] = option.user
+		send_msg(sock, presence)
+		print('послали данные приветствия... ')
+		'''		принимаем данные (подтверждение) от сервера		'''
+		response = get_msg(sock)
+		#print('приняли ответ от сервера')
+		if response:
+			print("YATA! =) Принята проверка от сервера: %s\n" % response[RESPONSE])
+		else:
+			print("Нет ответа от сервера, что-то пошло не так...\n")
 
-	print(5)
-	'''
-	формируем json данные приветствия и посылаем их серверу
-	'''
-	send_msg(sock, presence)
-	print(6)
-	'''
-	принимаем данные от сервера 
-	'''
-	response = get_msg(sock)
-	print(7)
-	if response:
-		print("Принята проверка от сервера: %s\n" % response)
-	else:
-		print("Нет ответа от сервера, что-то пошло не так...\n")
-
-	print(11)
-	# проверяем ответ
-	result = check_response(response)
-	if result == 200:
-		print('>> посылаем сообщение в чат\n')
-		# основной цикл (работа с сообщениями)
+		# проверяем ответ
+		result = check_response(response)
+		if result == 200:
+			# основной цикл (работа с сообщениями)
+			if option.write_client == 'yes':
+				while True:
+					# посылаем сообщение в чат (общий) в цикле
+					my_msg = input('==> Вы хотите отправить сообщение (y)? Для выхода жми exit!(e): ')
+					if my_msg == 'y':
+						# формируем сообщение в словарь
+						chat_msg[MESSAGE] = input('введите текст сообщения: ')
+						# посылаем словарь серверу
+						send_msg(sock, chat_msg)
+					elif my_msg == 'e':
+						print('EXIT!')
+						sock.close()
+						exit()
+					else:
+						print('ошибка при отправлении сообщения в чат\n')
+						sock.close()
+						exit()
 		while True:
-			# посылаем сообщение в чат (общий)
-			my_msg = input('==> Вы хотите отправить сообщение? (y,n,exit): ')
-			if my_msg == 'y':
-				# формируем сообщение в словарь
-				chat_msg[MESSAGE] = input('введите текст сообщения: ')
-				# посылаем словарь
-				send_msg(sock, chat_msg)
-			elif my_msg == 'n':
-				print('ОК, ждём входящих')
-				response = get_msg(sock)
-				# нужно функцию делать на предложение отправки сообщения
+			# принимаем сообщения из чата
+			if option.read_client == 'yes':
+				while True:
+					print('ОК, ждём входящих')
+					response = get_msg(sock)
+					print('p_1')
+					print('входящее сообщение: %s' %response)
+			print('p_10')
 
-			elif my_msg == 'exit':
-				print('EXIT!')
-				sock.close()
-				exit()
-	else:
-		print('ошибка при отправлении сообщения в чат\n')
-
-		print(12)
-
-	sock.close()
+		sock.close()
 

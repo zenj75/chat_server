@@ -37,7 +37,7 @@ def send_msg(socket, message):
 
 # принимаем сообщение
 def get_msg(socket):
-    gmsg = socket.recv(4096)    # принимаем байты
+    gmsg = socket.recv(1024)    # принимаем байты
     response = to_dict(gmsg)    # конвертируем в словарь
     return response             # возвращаем словарь
 

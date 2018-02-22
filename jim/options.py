@@ -1,14 +1,26 @@
-#!/usr/bin/env python
-#
-import time
-
 """Константы для jim протокола, настройки"""
 # Ключи
 ACTION = 'action'
-MESSAGE = 'message'
-TO = 'to'
-FROM = 'from'
-
-# значения
+TIME = 'time'
+USER = 'user'
+ACCOUNT_NAME = 'account_name'
 RESPONSE = 'response'
-MSG = 'msg'
+ERROR = 'error'
+
+MESSAGE = 'message'
+FROM = 'from'
+TO = 'to'
+
+
+# Значения
+PRESENCE = 'presence'
+
+# Коды ответов (будут дополняться)
+BASIC_NOTICE = 100
+OK = 200
+ACCEPTED = 202
+WRONG_REQUEST = 400  # неправильный запрос/json объект
+SERVER_ERROR = 500
+
+# Кортеж из кодов ответов
+RESPONSE_CODES = (BASIC_NOTICE, OK, ACCEPTED, WRONG_REQUEST, SERVER_ERROR)
