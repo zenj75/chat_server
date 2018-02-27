@@ -30,7 +30,7 @@ parser = OptionParser()
 parser.add_option('-a', '--address', dest='address', default='localhost',\
 	help='ADDRESS for server', metavar='ADDRESS')
 
-parser.add_option('-p', '--port', dest='port', type='int', default=7771,\
+parser.add_option('-p', '--port', dest='port', type='int', default=7777,\
 	help='PORT for server', metavar='PORT')
 
 (option, args) = parser.parse_args()

@@ -1,0 +1,21 @@
+Разбор полётов (смотрим, где косячим)
+-----------------------------------------
+
+Ошибка:
+sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'contacts.Friend' could not find table 'User'\
+ with which to generate a foreign key to target column 'Id'
+Причина:
+в поле связывания     Contact = Column(Integer, ForeignKey('users.Id'))  указывал имя класса User вместо имени таблицы
+Решение:
+указал имя таблицы 'users', всё создалось :)
+************************************************************
+
+Ошибка:
+на запрос session.query   (qq = session.query(User).filter_by(Name = 'Milarepa').first()) выдало ошибку:
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: users.Name [SQL: 'INSERT INTO users \
+ ("Name", "Info") VALUES (?, ?)'] [parameters: ('Ananda', 'first assistant')]
+Причина:
+Просто пользователь уже существует, можем только обновлять данные
+Решение:
+Используем обновление данных, но не повторение в повторно запускаемых скриптах. Или тестируем в консоли
+*************************************************************
