@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>943</width>
+    <height>485</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushOk1">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ок</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushExit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выход</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Commit">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>390</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Применить</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>310</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>exist policy-map</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_Iface">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>110</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Bundle-Ether</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Ten</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Gi</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Fa</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>BVI</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="comboBox_Speed">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>280</y>
+      <width>181</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>64k</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>256k</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>512k</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1024k</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2048k</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5m</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10m</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>20m</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>100m</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QListWidget" name="listWidget_Wind1">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>30</y>
+      <width>511</width>
+      <height>391</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_BD">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>50</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>30</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bridge-Domain Name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>90</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Interface Name</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_Iface">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>110</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd_3">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>150</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Neighbor</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_Neigh">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>170</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_Neigh2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>230</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd_4">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>210</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Neighbor_2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd_5">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>280</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Speed</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd_6">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>340</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Vlan ID</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_Vlan">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>340</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bd_7">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>340</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Vpn ID</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_Vpn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>340</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>943</width>
+     <height>19</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -19,3 +19,22 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 Решение:
 Используем обновление данных, но не повторение в повторно запускаемых скриптах. Или тестируем в консоли
 *************************************************************
+Ошибка:
+
+ФОРМИРУЮ СПИСОК КОНТАКТОВ В ТАКОМ ВИДЕ:
+{'contacts_list': {'Вималакирти':'Марпа'},{'Вималакирти':'Миларепа'}], 'to': '', 'time': 'Fri Mar  9 23:41:47 2018', 'action': 'get_contacts'}
+
+В КОНСОЛИ - ВСЁ ОК!
+>>> ssp = {'contacts_list': ['Milarepa', 'Vimalakirti', 'Shantideva'], 'time': 'Sun Mar 11 01:02:42 2018', 'action': 'get_contacts', 'to': 'Ananda'}
+>>> jm = json.dumps(ssp)
+>>> jm
+'{"contacts_list": ["Milarepa", "Vimalakirti", "Shantideva"], "to": "Ananda", "time": "Sun Mar 11 01:02:42 2018", "action": "get_contacts"}'
+>>> 
+
+
+дебаг принтами выдаёт 'Milarepa' is not JSON serializable (в функции to_bytes(message))
+то есть на этапе: jmessage = json.dumps(dmessage)
+
+AND bmessage - выходит пустое соотв-но :(
+----
+Причина: ХЗ пока

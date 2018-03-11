@@ -19,7 +19,8 @@ class User(Base):
             self.Info = info
 
     def __repr__(self):
-        return "<User: '%s'; %s>" % (self.Name, self.Info)
+        #return "<User: '%s'; %s>" % (self.Name, self.Info)
+        return "'%s'" %self.Name
 
 
 class Contacts(Base):
