@@ -32,7 +32,7 @@ parser = OptionParser()
 parser.add_option('-a', '--address', dest='address', default='localhost',\
 	help='ADDRESS for server', metavar='ADDRESS')
 
-parser.add_option('-p', '--port', dest='port', type='int', default=7771,\
+parser.add_option('-p', '--port', dest='port', type='int', default=7777,\
 	help='PORT for server', metavar='PORT')
 
 (option, args) = parser.parse_args()
@@ -64,6 +64,7 @@ def check_msg(message):
         print('нет action в сообщени..')
 
 
+
 addres = (option.address, option.port)
 resp_msg = ''
 contact_list = []
@@ -77,11 +78,11 @@ server.listen(5)                        # Переходит в режим ож�
 server.settimeout(0.2)                  # Таймаут необходим
 
 ## ПРИНИМАЕМ СООБЩЕНИЯ
-def read_messages(read_clients, all_clients):
+def read_messages(write_clients, all_clients):
     messages = []
     resp_msg = ''
-    for s in read_clients:
-        print('read_clients: %s' %s)
+    for s in write_clients:
+        print('write_clients: %s' %s)
         try:
             print(143)
             ##############  Получаем и обрабатываем входящие сообщения #############
@@ -92,7 +93,7 @@ def read_messages(read_clients, all_clients):
 
             ## обрабатываем получение списка контактов
             if msg_type == 'get_contacts':
-                print('====> получено от клиента: %s  <====' %inc_msg)
+                print('===> получено от клиента: %s  <===' %inc_msg)
                 ## формируем контакт лист для клиента
                 # print('user: %s' %user)
                 contact_list = Repo.friends_lst(user)
@@ -109,7 +110,6 @@ def read_messages(read_clients, all_clients):
             ## Если тип message - просто ставим в очередь
             if msg_type == 'message':
                 resp_msg = inc_msg
-
             print(155)
             ## добавляем сообщение в список
             messages.append(resp_msg)
@@ -117,32 +117,48 @@ def read_messages(read_clients, all_clients):
         except Exception as e:
             print('UPS_1! клиент {}{} отключился'.format(s.fileno(),s.getpeername()))
             print(e)
-            all_clients.remove(s)
+            all_clients.pop(s)
     return messages     # возвращаем список сообщений
 
 # ПОСЫЛАЕМ СООБШЕНИЯ
-def send_messages(messages, write_clients, all_clients):
+def send_messages(messages, read_clients, all_clients):
+    #print('(|||){}'.format(write_clients))
     # Отправляем сообщения клиентам, ожидающим входящие
-    for s in write_clients:
-        #print('(|||){}'.format(messages))
-        for message in messages:
-            try:
-                #print('(|||){}'.format(messages))
-                print('MESSAGE in query: {}'.format(message))
-                send_msg(s, message)
-                #print('<|||>{}'.format(messages))
-                print('=== >> Послали (скорее всего) сообщение: %s' %message)
-                #print(133)
-            except Exception as e:
-                print('UPS_2! клиент {} {} отключился'.format(s.fileno(), s.getpeername()))
-                print(e)
-                s.close()
-                all_clients.remove(s)
+    for s in read_clients:
+        #print('read_clients: %s' %s)
+        user = inputs[s]
 
+        for message in messages:
+            contact = message[TO]
+            if contact == 'to_all':
+                print('сообщение для всех')     #debug
+                send(s,message)
+            elif user == contact:
+                # направляем конкретному адресату
+                send(s,message)
+
+def send(s,message):
+    ''' отправка сообщения (сокращаем немного, нужно оптимизировать) '''
+    all_clients = []
+    try:
+        print('MESSAGE in query: {}'.format(message))   # смотрим сообщение в очереди
+        send_msg(s, message)
+        # print('<|||>{}'.format(messages))
+        print('=== >> Послали сообщение: %s' % message)
+        # print(133)
+    except Exception as e:
+        print('UPS_2! клиент {} {} отключился'.format(s.fileno(), s.getpeername()))
+        print(e)
+        s.close()
+        all_clients.pop(s)
 
 def mainloop():
-    inputs = [server]
+    #inputs = [server]
+    global inputs
+    inputs = {}
     outputs = []
+    global conn
+    conn = ''
 
     ''' Основной цикл обработки запросов клиентов '''
     ##################################################
@@ -159,7 +175,8 @@ def mainloop():
             # если тип - привествие - посылем код ответа клиенту
             if chk_presence:
                 response['status'] = OK
-                response['to'] = presence['user']['account_name']
+                conn_user = presence['user']['account_name']
+                response['to'] = conn_user
                 print('... отправляем ответ клиенту на приветствие ...')
                 print('response: %s' %response)
                 send_msg(conn, response)
@@ -172,9 +189,12 @@ def mainloop():
             pass  # Таймаут вышел
 
         else:
-            print("<<||>>  Получен запрос на соединение от %s" % str(addr))
-            # добавляем входящее соединение в список
-            inputs.append(conn)
+            print("<<||>>  Получен запрос на соединение от {}, user: {}".format(str(addr), conn_user))
+            # добавляем входящее соединение в список (словарь!)
+            ## + печатаем список соединений с пользователем
+            inputs.update({conn:conn_user})
+            for k,u in inputs.items():
+                print('INPUTS: {}:{}'.format(k,u))
         finally:
             # проверка событий ввода-вывода
             wait = 0

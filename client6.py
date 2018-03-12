@@ -22,7 +22,7 @@ parser = OptionParser()
 parser.add_option('-a', '--address', dest='address', default='localhost', \
                   help='ADDRESS for server', metavar='ADDRESS')
 
-parser.add_option('-p', '--port', dest='port', type='int', default=7771, \
+parser.add_option('-p', '--port', dest='port', type='int', default=7777, \
                   help='PORT for server', metavar='PORT')
 
 parser.add_option('-u', '--user', dest='user', default='Marpa', \
@@ -129,8 +129,10 @@ class User:
                 my_msg = input(
                     '==> Вы хотите отправить сообщение (y)? получить лист контактов (list)? Для выхода жми exit!(e): ')
                 if my_msg == 'y':
+                    # Определяем адресата сообщения
+                    chat_msg[TO] = input('Кому отправить сообщение: ')
                     # формируем сообщение в словарь
-                    chat_msg[MESSAGE] = input('введите текст сообщения: ')
+                    chat_msg[MESSAGE] = input('Введите текст сообщения: ')
                     # посылаем словарь серверу
                     chat_msg[FROM] = option.user
                     print('message_test: %s' % chat_msg)

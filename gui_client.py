@@ -11,7 +11,7 @@ app = QtWidgets.QApplication(sys.argv)
 window = uic.loadUi('contact_list.ui')
 
 # пользователь, контакты которого будут выводится
-client = User(Name = 'Вималакирти')
+client = User(Name = 'Vimalakirti')
 contact_list = client.get_contacts()
 
 def load_contacts(contacts):

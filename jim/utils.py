@@ -17,18 +17,18 @@ def to_bytes(dmessage):
     >>> to_bytes(some_dict)
     b'{"value" : "500"}'
     '''
-    #print('на входе (to_bytes:dmessage): %s' % dmessage)    #DEBUG
+    print('на входе (to_bytes:dmessage): %s' % dmessage)    #DEBUG
     if isinstance(dmessage, dict) or isinstance(dmessage, list):
         # Преобразуем словарь в json
         try:
             jmessage = json.dumps(dmessage)
             # Переводим json в байты
-            print('JSON: %s' % jmessage)  # DEBUG
+            #print('JSON: %s' % jmessage)           # DEBUG
         except Exception as e:
             print('e1: %s' %e)
         try:
             bmessage = jmessage.encode(ENCODING)
-            print('B_MESSAGE: %s' %bmessage)        #DEBUG
+            #print('B_MESSAGE: %s' %bmessage)        #DEBUG
         except Exception as e:
             print('e2: %s' %e)
         # Возвращаем байты
@@ -48,7 +48,9 @@ def to_dict(bmessage):
 # посылаем сообщение
 def send_msg(socket, message):
     bmsg = to_bytes(message)    # словарь в байты
+    print(1005)
     socket.send(bmsg)           # отправка
+    #print('BMSG %s' %bmsg)
 
 # принимаем сообщение
 def get_msg(socket):

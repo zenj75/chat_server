@@ -13,7 +13,7 @@ presence = {
 	"type": "status",
 	"user": {
 	"account_name": user,
-	"status": "Yep, I am here!"
+	"status": "online"
 	}
 }
 
@@ -30,7 +30,7 @@ chat_msg = {
 	"time":  timestamp,
 	"to":  "#room_name",
 	"from":  user,
-	"encoding": "ascii",
+	"encoding": "utf-8",
 	"message": "Hi all in this room!"
 }
 
